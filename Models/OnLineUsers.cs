@@ -55,8 +55,10 @@ namespace ChatManager.Models
             ConnectedUsersId.Add(userId);
             SetHasChanged();
         }
-        public static void RemoveSessionUser()
+        public static void RemoveSessionUser(bool expired = false)
         {
+            if(!expired)
+                DB.Logins.EndLastOccurence();
             User user = GetSessionUser();
             if (user != null)
                 ConnectedUsersId.Remove(user.Id);

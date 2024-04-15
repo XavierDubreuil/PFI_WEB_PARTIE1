@@ -338,3 +338,13 @@ input[type=checkbox] {
     align-items: center;
     height: 50px;
 }
+
+/*Pour la liste des connexions*/
+
+.loginsContainerDay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+

@@ -320,7 +320,7 @@ namespace ChatManager.Controllers
 
         public ActionResult ExpiredSession()
         {
-            OnlineUsers.RemoveSessionUser();
+            OnlineUsers.RemoveSessionUser(true);
             return Redirect("/Accounts/Login?message=Session expirée, veuillez vous reconnecter.");
         }
         public ActionResult Login(string message)
@@ -354,6 +354,7 @@ namespace ChatManager.Controllers
                 }
                 OnlineUsers.AddSessionUser(user.Id);
                 OnlineUsers.AddNotification(user.Id, "Heureux de vous revoir");
+                DB.Logins.Add(new Login(user.Id));
                 return RedirectToAction("Index", "ChatRoom");
             }
 
@@ -370,6 +371,15 @@ namespace ChatManager.Controllers
         {
             Session["LastAction"] = "/Accounts/LoginsJournal";
             return View();
+        }
+        [OnlineUsers.AdminAccess]
+        public ActionResult Logins(bool forceRefresh = false)
+        {
+            if (forceRefresh || DB.Logins.HasChanged)
+            {
+                return PartialView(DB.Logins.ToList().OrderByDescending(c => c.Start).GroupBy(c => c.Start.Date).ToList());
+            }
+            return null;
         }
         #endregion
         [OnlineUsers.AdminAccess]
