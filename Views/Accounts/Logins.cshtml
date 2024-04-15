@@ -1,0 +1,27 @@
+﻿@model IEnumerable<IEnumerable<ChatManager.Models.Login>>
+@foreach (var item in Model)
+{
+    <span>
+        @item.ElementAt(0).Start.ToString("yyyy/MM/dd")
+    </span>
+    <hr />
+    foreach (var user in item)
+    {
+        <div class="loginsContainerDay">
+            <div>
+                @Helper.AvatarUser(ChatManager.Models.DB.Users.Get(user.UserId), "UserSmallAvatar")
+            </div>
+            @if (user.End.HasValue)
+            {
+               <span>
+                   @user.Start.ToString("HH:mm") : @user.End.Value.ToString("HH:mm")
+               </span>
+            }
+
+        </div>
+        <br />
+    }
+    <hr />
+}
+
+

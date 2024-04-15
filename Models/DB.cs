@@ -12,6 +12,8 @@ namespace ChatManager.Models
         private static readonly DB instance = new DB();
 
         public static UsersRepository Users { get; set; }
+        public static LoginRepository Logins { get; set; }
+
         public static Repository<Gender> Genders { get; set; }
         public static Repository<UserType> UserTypes { get; set; }
         public static Repository<UnverifiedEmail> UnverifiedEmails { get; set; }
@@ -24,6 +26,7 @@ namespace ChatManager.Models
             UserTypes = new Repository<UserType>();
             UnverifiedEmails = new Repository<UnverifiedEmail>();
             ResetPasswordCommands = new Repository<ResetPasswordCommand>();
+            Logins = new LoginRepository();
            
             InitRepositories(this);
         }
