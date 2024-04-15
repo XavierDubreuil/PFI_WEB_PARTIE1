@@ -267,6 +267,9 @@ fieldset {
 .menuIcon {
     height: 40px !important;
 }
+.IconTimeOut {
+    width:25px;
+}
 
 .menu {
     display: grid;

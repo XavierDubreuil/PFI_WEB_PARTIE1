@@ -14,7 +14,7 @@
 
     <script>
         $(function () {
-            initTimeout(10);
+            initTimeout(120);
             let GetUsersList = new PartialRefresh("@Url.Action("GetUsersList")", "UsersListContainer", 5, UpdateCheckboxChangeCallback);
             function UpdateCheckboxChangeCallback() {
                 // renew checkbox change call back

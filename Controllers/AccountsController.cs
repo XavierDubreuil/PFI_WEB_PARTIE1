@@ -354,7 +354,10 @@ namespace ChatManager.Controllers
                 }
                 OnlineUsers.AddSessionUser(user.Id);
                 OnlineUsers.AddNotification(user.Id, "Heureux de vous revoir");
-                DB.Logins.Add(new Login(user.Id));
+                Login login = new Login(user.Id);
+                DB.Logins.Add(login);
+                Session["currentId"]=login.Id;
+
                 return RedirectToAction("Index", "ChatRoom");
             }
 
