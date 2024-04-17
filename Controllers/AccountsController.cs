@@ -448,6 +448,42 @@ namespace ChatManager.Controllers
             SendBlockStatusEMail(user);
             return Json(DB.Users.Update(user), JsonRequestBehavior.AllowGet);
         }
+        public void DeleteLogins(string loginDate)
+        {
+            //Essaie 3 : réussite
+            var originel = DB.Logins.ToList();
+            List<Login> copie = new List<Login>();
+            for (int i = 0; i < originel.Count; i++) 
+            {
+                if (originel[i].Start.ToString("yyyy/MM/dd") != loginDate) 
+                {
+                    copie.Add(originel[i]);
+                }
+            }
+            originel.Clear();
+            //impossible de faire une simple copie alors je dois refaire une boucle
+            for (int i = 0; i < copie.Count; i++)
+            {
+                DB.Logins.Add(copie[i]);
+            }//on copie dans le tableau originel seulement les bonnes données
+            //Essaie 2 : Raté
+            /*for(int i = 0; i < Test.Count; i++) 
+            {
+                if (Test[i].Start.ToString("yyyy/MM/dd") == loginDate)
+                    DB.Logins.Delete(Test[i].Id);
+                if (i == Test.Count - 1)
+                    break;
+            }
+            //Essaie 1 : Raté
+            foreach (var log in Test) 
+            {
+                if (log.Start.ToString("yyyy/MM/dd") != loginDate)
+                {
+                    Test2.Add(log);
+                }
+                DB.Logins.Delete(log.Id);
+            }*/
+        }
         public JsonResult PromoteUser(int userid)
         {
             User user = DB.Users.Get(userid);
@@ -504,7 +540,13 @@ namespace ChatManager.Controllers
             }
             return null;
         }
+        public ActionResult GetLoginsList(bool forceRefresh = false) 
+        {
+            if(forceRefresh)
+                return PartialView(DB.Logins.ToList());
+            return null;
+        }
         #endregion
-
     }
+    
 }

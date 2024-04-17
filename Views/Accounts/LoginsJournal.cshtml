@@ -6,13 +6,39 @@
 <h2>Journal des connexions</h2>
 <hr />
 <div id="LoginsContainer" class=" LoginsContainer"> <!-- Refreshed periodically --> </div>
-@Scripts.Render("~/bundles/js")
 @section Scripts {
     <script defer>
-        initTimeout(120);
-
-        //let logins = new PartialRefresh("@Url.Action("GetUsersList")", "UsersListContainer", 5
-        let logins = new PartialRefresh("@Url.Action("Logins", "Accounts")", "LoginsContainer", 5);
+         $(function () {
+             initTimeout(120);
+             let logins = new PartialRefresh("@Url.Action("Logins", "Accounts")", "LoginsContainer", 5, UpdateCheckboxChangeCallback);
+             function UpdateCheckboxChangeCallback() {
+                 // renew checkbox change call back
+                 $(".LoginPart").click(
+                     function () {
+                         let loginsDate = this.id.split('_')[1];
+                         logins.command("@Url.Action("DeleteLogins")" + "?loginDate=" + loginsDate);
+                     }
+                 );
+                 $(".CB_Blocked").change(
+                     function () {
+                         let userid = this.id.split('_')[1];
+                         GetUsersList.command("@Url.Action("ChangeUserBlockedStatus")" + "?userid=" + userid + "&blocked=" + this.checked.toString());
+                     }
+                 );
+                 $(".DELETE_USER").click(
+                     function () {
+                         let userid = this.id.split('_')[1];
+                         GetUsersList.confirmedCommand(this.title + ' ?', "@Url.Action("Delete")" + "?userid=" + userid);
+                     }
+                 );
+                 $(".promoteUser").click(
+                     function () {
+                         let userid = this.id.split('_')[1];
+                         GetUsersList.command("@Url.Action("PromoteUser")" + "?userid=" + userid);
+                     }
+                 )
+             }
+         })
     </script>
 }
 

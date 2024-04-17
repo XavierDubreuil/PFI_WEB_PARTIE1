@@ -3,39 +3,39 @@
 {
     <span>
         @item.ElementAt(0).Start.ToString("yyyy/MM/dd")
-        @Helper.IconConfirmCmd("", "", "fa-times-rectangle-o", "Effacer la date :" + @item.ElementAt(0).Start.ToString("yyyy/MM/dd") + "?")
+            <span id="Delete_@item.ElementAt(0).Start.ToString("yyyy/MM/dd")" class="LoginPart icon fa fa-times-rectangle-o"></span>
     </span>
     <hr />
     foreach (var user in item)
     {
-<div class="loginsContainerDay">
-    <div>
-        @Helper.AvatarUser(ChatManager.Models.DB.Users.Get(user.UserId), "UserSmallAvatar")
-    </div>
-    @if (user.End.HasValue)
-    {
-        <span>
-            @user.Start.ToString("HH:mm") : @user.End.Value.ToString("HH:mm")
-        </span>
-    }
-    else
-    {
-        var isOnline = ChatManager.Models.OnlineUsers.IsOnLine(user.UserId);
-        if (isOnline && (int)Session["currentId"]==user.Id)
-        {
-            <span>
-                @user.Start.ToString("HH:mm") : @Helper.OnLineStatusIcon(isOnline)
-            </span>
-        }
-        else
-        {
-            <span>
-                @user.Start.ToString("HH:mm") : <img class="IconTimeOut" src="~/Content/UI-Icons/timeout.png" />
-            </span>
-        }
-    }
+        <div class="loginsContainerDay">
+            <div>
+                @Helper.AvatarUser(ChatManager.Models.DB.Users.Get(user.UserId), "UserSmallAvatar")
+            </div>
+            @if (user.End.HasValue)
+            {
+                <span>
+                    @user.Start.ToString("HH:mm") : @user.End.Value.ToString("HH:mm")
+                </span>
+            }
+            else
+            {
+                var isOnline = ChatManager.Models.OnlineUsers.IsOnLine(user.UserId);
+                if (isOnline && (int)Session["currentId"] == user.Id)
+                {
+                    <span>
+                        @user.Start.ToString("HH:mm") : @Helper.OnLineStatusIcon(isOnline)
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        @user.Start.ToString("HH:mm") : <img class="IconTimeOut" src="~/Content/UI-Icons/timeout.png" />
+                    </span>
+                }
+            }
 
-</div>
+        </div>
         <br />
     }
     <hr />
