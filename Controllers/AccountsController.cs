@@ -514,6 +514,21 @@ namespace ChatManager.Controllers
         [OnlineUsers.AdminAccess]
         public JsonResult Delete(int userid)
         {
+            var originel = DB.Logins.ToList();
+            List<Login> copie = new List<Login>();
+            for (int i = 0; i < originel.Count; i++)
+            {
+                if (originel[i].UserId != userid)
+                {
+                    copie.Add(originel[i]);
+                }
+            }
+            originel.Clear();
+            //impossible de faire une simple copie alors je dois refaire une boucle
+            for (int i = 0; i < copie.Count; i++)
+            {
+                DB.Logins.Add(copie[i]);
+            }
             User userToDelete = DB.Users.Get(userid);
             if (userToDelete != null)
             {

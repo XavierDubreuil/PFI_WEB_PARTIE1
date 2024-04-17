@@ -27,19 +27,6 @@
   },
   {
     "Id": 3,
-    "UserTypeId": 2,
-    "Verified": true,
-    "Blocked": false,
-    "FirstName": "Saliha",
-    "LastName": "Yacoub",
-    "GenderId": 2,
-    "Email": "Saliha.Yacoub@clg.qc.ca",
-    "Avatar": "/Images_Data/User_Avatars/4491ed49-2848-4618-b131-7036cb07126f.Jpeg",
-    "Password": "password",
-    "CreationDate": "2023-03-18T12:00:00"
-  },
-  {
-    "Id": 3,
     "UserTypeId": 3,
     "Verified": true,
     "Blocked": false,
@@ -92,7 +79,7 @@
   },
   {
     "Id": 7,
-    "UserTypeId": 2,
+    "UserTypeId": 1,
     "Verified": true,
     "Blocked": false,
     "FirstName": "Patrice",
