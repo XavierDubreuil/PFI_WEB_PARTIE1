@@ -20,6 +20,30 @@
                         logins.command("@Url.Action("DemandeAmitié")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
+                $(".AccepterDemande").click(
+                    function () {
+                        let user1 = this.id.split('_')[1];
+                        let user2 = this.id.split('_')[2];
+
+                        logins.command("@Url.Action("AccepterDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                    }
+                )
+                $(".RefuserDemande").click(
+                    function () {
+                        let user1 = this.id.split('_')[1];
+                        let user2 = this.id.split('_')[2];
+
+                        logins.command("@Url.Action("RefuserDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                    }
+                )
+                $(".RetirerDemande").click(
+                    function () {
+                        let user1 = this.id.split('_')[1];
+                        let user2 = this.id.split('_')[2];
+
+                        logins.command("@Url.Action("RetirerDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                    }
+                )
             }
         })
     </script>
