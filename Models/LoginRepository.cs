@@ -24,5 +24,17 @@ namespace ChatManager.Models
                 }
             }
         }
+        public int LastOccurence(int userId)
+        {
+            var liste = DB.Logins.ToList();
+            for (int i = liste.Count - 1; i >= 0; i--)
+            {
+                if (liste[i].UserId == userId)
+                {
+                    return liste[i].Id;
+                }
+            }
+            return 0;
+        }
     }
 }

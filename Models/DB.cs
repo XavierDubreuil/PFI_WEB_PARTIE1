@@ -13,6 +13,7 @@ namespace ChatManager.Models
 
         public static UsersRepository Users { get; set; }
         public static LoginRepository Logins { get; set; }
+        public static RelationRepository Relations { get; set; }
 
         public static Repository<Gender> Genders { get; set; }
         public static Repository<UserType> UserTypes { get; set; }
@@ -21,6 +22,7 @@ namespace ChatManager.Models
        
         public DB()
         {
+            Relations = new RelationRepository();
             Users = new UsersRepository();
             Genders = new Repository<Gender>();
             UserTypes = new Repository<UserType>();

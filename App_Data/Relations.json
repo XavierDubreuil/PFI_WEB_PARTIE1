@@ -1,0 +1,338 @@
+[
+  {
+    "Id": 1,
+    "UsersId": {
+      "Item1": 1,
+      "Item2": 2
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 2,
+    "UsersId": {
+      "Item1": 1,
+      "Item2": 3
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 3,
+    "UsersId": {
+      "Item1": 1,
+      "Item2": 4
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 4,
+    "UsersId": {
+      "Item1": 1,
+      "Item2": 5
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 5,
+    "UsersId": {
+      "Item1": 1,
+      "Item2": 6
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 6,
+    "UsersId": {
+      "Item1": 1,
+      "Item2": 7
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 7,
+    "UsersId": {
+      "Item1": 2,
+      "Item2": 1
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 8,
+    "UsersId": {
+      "Item1": 2,
+      "Item2": 3
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 9,
+    "UsersId": {
+      "Item1": 2,
+      "Item2": 4
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 10,
+    "UsersId": {
+      "Item1": 2,
+      "Item2": 5
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 11,
+    "UsersId": {
+      "Item1": 2,
+      "Item2": 6
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 12,
+    "UsersId": {
+      "Item1": 2,
+      "Item2": 7
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 13,
+    "UsersId": {
+      "Item1": 3,
+      "Item2": 1
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 14,
+    "UsersId": {
+      "Item1": 3,
+      "Item2": 2
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 15,
+    "UsersId": {
+      "Item1": 3,
+      "Item2": 4
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 16,
+    "UsersId": {
+      "Item1": 3,
+      "Item2": 5
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 17,
+    "UsersId": {
+      "Item1": 3,
+      "Item2": 6
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 18,
+    "UsersId": {
+      "Item1": 3,
+      "Item2": 7
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 19,
+    "UsersId": {
+      "Item1": 4,
+      "Item2": 1
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 20,
+    "UsersId": {
+      "Item1": 4,
+      "Item2": 2
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 21,
+    "UsersId": {
+      "Item1": 4,
+      "Item2": 3
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 22,
+    "UsersId": {
+      "Item1": 4,
+      "Item2": 5
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 23,
+    "UsersId": {
+      "Item1": 4,
+      "Item2": 6
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 24,
+    "UsersId": {
+      "Item1": 4,
+      "Item2": 7
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 25,
+    "UsersId": {
+      "Item1": 5,
+      "Item2": 1
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 26,
+    "UsersId": {
+      "Item1": 5,
+      "Item2": 2
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 27,
+    "UsersId": {
+      "Item1": 5,
+      "Item2": 3
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 28,
+    "UsersId": {
+      "Item1": 5,
+      "Item2": 4
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 29,
+    "UsersId": {
+      "Item1": 5,
+      "Item2": 6
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 30,
+    "UsersId": {
+      "Item1": 5,
+      "Item2": 7
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 31,
+    "UsersId": {
+      "Item1": 6,
+      "Item2": 1
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 32,
+    "UsersId": {
+      "Item1": 6,
+      "Item2": 2
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 33,
+    "UsersId": {
+      "Item1": 6,
+      "Item2": 3
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 34,
+    "UsersId": {
+      "Item1": 6,
+      "Item2": 4
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 35,
+    "UsersId": {
+      "Item1": 6,
+      "Item2": 5
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 36,
+    "UsersId": {
+      "Item1": 6,
+      "Item2": 7
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 37,
+    "UsersId": {
+      "Item1": 7,
+      "Item2": 1
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 38,
+    "UsersId": {
+      "Item1": 7,
+      "Item2": 2
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 39,
+    "UsersId": {
+      "Item1": 7,
+      "Item2": 3
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 40,
+    "UsersId": {
+      "Item1": 7,
+      "Item2": 4
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 41,
+    "UsersId": {
+      "Item1": 7,
+      "Item2": 5
+    },
+    "Rapport": 0
+  },
+  {
+    "Id": 42,
+    "UsersId": {
+      "Item1": 7,
+      "Item2": 6
+    },
+    "Rapport": 0
+  }
+]

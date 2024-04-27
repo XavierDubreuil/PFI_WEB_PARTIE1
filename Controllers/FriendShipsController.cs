@@ -15,5 +15,26 @@ namespace MoviesDBManager.Controllers
             Session["LastAction"] = "FriendShips/index";
             return View();
         }
+        public ActionResult Relations(bool forceRefresh = false)
+        {
+            if (forceRefresh || DB.Relations.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged)
+            {
+                var listesParUser = DB.Relations.ToList().GroupBy(c => c.UsersId.usr1).ToList();
+                foreach (var liste in listesParUser) 
+                { 
+                    if(liste.ElementAt(0).UsersId.usr1 == OnlineUsers.GetSessionUser().Id)
+                    {
+                        return PartialView(liste.OrderBy(c => DB.Users.Get(c.UsersId.usr2).FirstName));
+                    }
+                }
+            }
+            return null;
+        }
+        public void DemandeAmitié(int Idusr1, int Idusr2)
+        {
+            var relations = DB.Relations.FindRelation(Idusr1, Idusr2);
+            relations.rel1.Rapport = TypeRapport.Demande_Envoyée;
+            relations.rel2.Rapport = TypeRapport.Requête_Entrante;
+        }
     }
 }

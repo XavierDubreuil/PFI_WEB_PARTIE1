@@ -21,7 +21,7 @@
             else
             {
                 var isOnline = ChatManager.Models.OnlineUsers.IsOnLine(user.UserId);
-                if (isOnline && (int)Session["currentId"] == user.Id)
+                if (isOnline && ChatManager.Models.DB.Logins.LastOccurence(user.UserId) == user.Id)
                 {
                     <span>
                         @user.Start.ToString("HH:mm") : @Helper.OnLineStatusIcon(isOnline)

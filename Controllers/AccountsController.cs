@@ -366,6 +366,7 @@ namespace ChatManager.Controllers
         public ActionResult Logout()
         {
             OnlineUsers.RemoveSessionUser();
+
             return RedirectToAction("Login");
         }
         
@@ -378,7 +379,7 @@ namespace ChatManager.Controllers
         [OnlineUsers.AdminAccess]
         public ActionResult Logins(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Logins.HasChanged)
+            if (forceRefresh || DB.Logins.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged)
             {
                 return PartialView(DB.Logins.ToList().OrderByDescending(c => c.Start).GroupBy(c => c.Start.Date).ToList());
             }

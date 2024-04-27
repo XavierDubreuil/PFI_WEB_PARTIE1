@@ -349,5 +349,26 @@ input[type=checkbox] {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    max-width:600px;
 }
 
+.friendship-userInfo{
+    min-width:85%;
+}
+
+.green{
+    color: green;
+}
+
+.red{
+    color: red;
+}
+.sectionCmd{
+    width: 8%
+}
+.iconsFriendShips {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
