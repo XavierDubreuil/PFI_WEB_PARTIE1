@@ -23,6 +23,24 @@
         var test = [];
         $(function () {
             initTimeout(8820);
+            $(".checkedBox").change(
+                function () {
+                    console.log("----------------------------------------------------------------------");
+                    test = [];
+                    var elementCheck = $('input[name=filtre]:checked');
+                    elementCheck.each(function () {
+                        test.push(this.id);
+                    });
+                    console.log();
+                    friendshipList.command("@Url.Action("Filtre")" + "?LesFiltres=" + test);
+                })
+             $("#Search").click(
+                 function () {
+                     var nom = $('#SearchBar').val();
+                     console.log(nom);
+                     friendshipList.command("@Url.Action("SetFiltreNom")" + "?nom=" + nom);
+                 }
+             )
             var elementCheck = $('input[name=filtre]:checked');
             elementCheck.each(function () {
                 test.push(this.id);
@@ -63,25 +81,7 @@
                         friendshipList.command("@Url.Action("RetirerDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
-                $(".checkedBox").change(
-                    function () {
-                        console.log("----------------------------------------------------------------------");
-                            test = [];
-                            var elementCheck = $('input[name=filtre]:checked');
-                            elementCheck.each(function () {
-                                test.push(this.id);
-                            });
-                        console.log();
-                        friendshipList.command("@Url.Action("Filtre")" + "?LesFiltres=" + test);
-                    }
-                )
-                $("#Search").click(
-                    function () {
-                        var nom = $('#SearchBar').val();
-                        console.log(nom);
-                        friendshipList.command("@Url.Action("SetFiltreNom")" + "?nom=" + nom);
-                    }
-                )
+
             }
         })
     </script>
