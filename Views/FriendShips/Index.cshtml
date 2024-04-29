@@ -5,6 +5,18 @@
 
 <h2>Gestion des amitiés</h2>
 <hr />
+<div>
+    <input type="text" placeholder="Recherche..." />
+    @Helper.Icon("Search", "fa fa-search", "Rechercher parmis vos critères")
+</div>
+<div class="sectionFiltre">
+    <div><input type="checkbox" name="filtre" id="Pas_Encore_Ami" />@Helper.Icon("", "fa fa-plus-circle green", "")</div>
+    <div><input type="checkbox" name="filtre" id="Requête_Entrante" /> @Helper.Icon("", "fa fa-check green", "")</div>
+    <div><input type="checkbox" name="filtre" id="Demande_Envoyée" />@Helper.Icon("", "fa fa-clock-o green", "")</div>
+    <div><input type="checkbox" name="filtre" id="Amis" /> @Helper.Icon("", "fa fa-check-circle green", "")</div>
+    <div><input type="checkbox" name="filtre" id="DemandeRefuser" />@Helper.Icon("", "fa fa-times-circle red", "")</div>
+    <div><input type="checkbox" name="filtre" id="Bloquer" />@Helper.Icon("", "fa fa-ban red", "")</div>
+</div>
 <div id="RelationContainer" class=" RelationContainer"> <!-- Refreshed periodically --> </div>
 @section Scripts {
     <script>
@@ -45,6 +57,17 @@
                     }
                 )
             }
+            $("#Search").click(
+                function () {
+                    var test = [];
+                    var elementCheck = $('input[name=filtre]:checked');
+                    elementCheck.each(function () {
+                        test.push(this.id);
+                        console.log(test);
+                    });
+                    logins.command("@Url.Action("Filtre")" + "?test=" + test);
+                }
+            )
         })
     </script>
 }
