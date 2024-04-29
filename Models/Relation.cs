@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ChatManager.Models
 {
-    public enum TypeRapport { Pas_Encore_Ami, Requête_Entrante, Demande_Envoyée, Amis, Demande_Refusé, A_Refusé_Demande};
+    public enum TypeRapport { Pas_Encore_Ami, Requête_Entrante, Demande_Envoyée, Amis, Demande_Refusé, A_Refusé_Demande, block};
     public class Relation
     {
         public int Id { get; set; }

@@ -375,4 +375,10 @@ input[type=checkbox] {
 .sectionFiltre {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    max-width: 400px;
+}
+.filtreNom {
+    width: 360px;
+    height: 35px;
 }

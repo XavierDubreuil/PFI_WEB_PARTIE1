@@ -16,11 +16,67 @@ namespace MoviesDBManager.Controllers
             Session["LastAction"] = "FriendShips/index";
             return View();
         }
+
         public ActionResult Relations(bool forceRefresh = false)
         {
-            if (forceRefresh || DB.Relations.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged)
+            bool filtersChanged = Session["FiltersChanged"] != null ? (bool)Session["FiltersChanged"] : false;
+            List <TypeRapport> ListDeFiltre = new List<TypeRapport>();
+
+            if (forceRefresh || DB.Relations.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged || filtersChanged)
             {
-                if (Session["ListeFlitrer"] == null)
+                if (filtersChanged)
+                {
+                    bool block = false;
+                    ListDeFiltre = DoFilter();
+                    foreach(var type in ListDeFiltre)
+                    {
+                        if(type == TypeRapport.block)
+                            block = true;
+                    }
+                    var listesParUser = DB.Relations.ToList().GroupBy(c => c.UsersId.usr1).ToList();
+                    List<Relation> ListreFiltrer = new List<Relation>();
+                    foreach (var liste in listesParUser)
+                    {
+                        if (liste.ElementAt(0).UsersId.usr1 == OnlineUsers.GetSessionUser().Id)
+                        {
+                            foreach (var elem in liste)
+                            {
+                                var user = DB.Users.Get(elem.UsersId.usr2);
+                                if (block && listesParUser.Count() == 0)
+                                {
+                                    if (user.Blocked)
+                                    {
+                                        ListreFiltrer.Add(elem);
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (var item in ListDeFiltre)
+                                    {
+                                        if (block)
+                                        {
+                                            if (user.Blocked || elem.Rapport == item)
+                                            {
+                                                ListreFiltrer.Add(elem);
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (!user.Blocked && elem.Rapport == item)
+                                            {
+                                                ListreFiltrer.Add(elem);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return PartialView(ListreFiltrer.OrderBy(c => DB.Users.Get(c.UsersId.usr2).FirstName));
+                }
+                else
                 {
                     var listesParUser = DB.Relations.ToList().GroupBy(c => c.UsersId.usr1).ToList();
                     foreach (var liste in listesParUser)
@@ -31,15 +87,6 @@ namespace MoviesDBManager.Controllers
                         }
                     }
                 }
-                else
-                {
-                    var test6 = (List<Relation>)Session["ListeFlitrer"];
-                    foreach(var liste in test6) 
-                    {
-                        return PartialView(liste.OrderBy(c => DB.Users.Get(c.UsersId.usr2).FirstName));
-                    }
-                }
-
             }
             return null;
         }
@@ -75,14 +122,19 @@ namespace MoviesDBManager.Controllers
             relations.rel2.Rapport = TypeRapport.Pas_Encore_Ami;
             DB.Relations.Update(relations.rel2);
         }
-        public void Filtre(string[] test)
+        public ActionResult Filtre(string LesFiltres)
         {
-            var test2 = test[0].Split(',');
-            bool block = false;
+            Session["FiltersChanged"] = true;
+            Session["CurrentFilter"] = LesFiltres;
+            return null;
+        }
+        public List<TypeRapport> DoFilter()
+        {
+            var filtres = ((string)Session["CurrentFilter"]).Split(',');
             List<TypeRapport> listRap = new List<TypeRapport>();
-            foreach(var test3 in test2)
+            foreach (var filtre in filtres)
             {
-                switch (test3)
+                switch (filtre)
                 {
                     case "Pas_Encore_Ami":
                         listRap.Add(TypeRapport.Pas_Encore_Ami);
@@ -101,42 +153,11 @@ namespace MoviesDBManager.Controllers
                         listRap.Add(TypeRapport.A_Refusé_Demande);
                         break;
                     case "Bloquer":
-                        block = true;
+                        listRap.Add(TypeRapport.block);
                         break;
                 }
             }
-            var listesParUser = DB.Relations.ToList().GroupBy(c => c.UsersId.usr1).ToList();
-            List<Relation> TestList = new List<Relation>();
-            foreach (var liste in listesParUser)
-            {
-                if (liste.ElementAt(0).UsersId.usr1 == OnlineUsers.GetSessionUser().Id)
-                {
-                    foreach (var elem in liste)
-                    {
-                        foreach(var item in listRap)
-                        {
-                            if(!block)
-                            {
-                                var user = DB.Users.Get(elem.UsersId.usr2);
-
-                                if (elem.Rapport == item && !user.Blocked)
-                                {
-                                    TestList.Add(elem);
-                                }
-                            }
-                            else
-                            {
-                                if (elem.Rapport == item)
-                                {
-                                    TestList.Add(elem);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            Console.WriteLine(TestList);
-            Session["ListeFlitrer"] = TestList;
+            return listRap;
         }
     }
 }

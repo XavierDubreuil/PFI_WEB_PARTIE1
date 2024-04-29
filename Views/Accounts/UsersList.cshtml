@@ -20,6 +20,7 @@
                 // renew checkbox change call back
                 $(".CB_Blocked").change(
                     function () {
+                        console.log("asdsihfugyiowuifgeyuiwuqeodyftuyi2o1#pu3yefdtuio213eywtfduge32i1");
                         let userid = this.id.split('_')[1];
                         GetUsersList.command("@Url.Action("ChangeUserBlockedStatus")" + "?userid=" + userid + "&blocked=" + this.checked.toString());
                     }

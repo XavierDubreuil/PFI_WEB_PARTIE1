@@ -6,30 +6,37 @@
 <h2>Gestion des amitiés</h2>
 <hr />
 <div>
-    <input type="text" placeholder="Recherche..." />
+    <input type="text" placeholder="Recherche..." maxlength="100" class="filtreNom" />
     @Helper.Icon("Search", "fa fa-search", "Rechercher parmis vos critères")
 </div>
 <div class="sectionFiltre">
-    <div><input type="checkbox" name="filtre" id="Pas_Encore_Ami" />@Helper.Icon("", "fa fa-plus-circle green", "")</div>
-    <div><input type="checkbox" name="filtre" id="Requête_Entrante" /> @Helper.Icon("", "fa fa-check green", "")</div>
-    <div><input type="checkbox" name="filtre" id="Demande_Envoyée" />@Helper.Icon("", "fa fa-clock-o green", "")</div>
-    <div><input type="checkbox" name="filtre" id="Amis" /> @Helper.Icon("", "fa fa-check-circle green", "")</div>
-    <div><input type="checkbox" name="filtre" id="DemandeRefuser" />@Helper.Icon("", "fa fa-times-circle red", "")</div>
-    <div><input type="checkbox" name="filtre" id="Bloquer" />@Helper.Icon("", "fa fa-ban red", "")</div>
+    <div><input checked class="checkedBox" type="checkbox" name="filtre" id="Pas_Encore_Ami" />@Helper.Icon("", "fa fa-plus-circle green", "")</div>
+    <div><input checked class="checkedBox" type="checkbox" name="filtre" id="Requête_Entrante" /> @Helper.Icon("", "fa fa-check green", "")</div>
+    <div><input checked class="checkedBox" type="checkbox" name="filtre" id="Demande_Envoyée" />@Helper.Icon("", "fa fa-clock-o green", "")</div>
+    <div><input checked class="checkedBox" type="checkbox" name="filtre" id="Amis" /> @Helper.Icon("", "fa fa-check-circle green", "")</div>
+    <div><input checked class="checkedBox" type="checkbox" name="filtre" id="DemandeRefuser" />@Helper.Icon("", "fa fa-times-circle red", "")</div>
+    <div><input checked class="checkedBox" type="checkbox" name="filtre" id="Bloquer" />@Helper.Icon("", "fa fa-ban red", "")</div>
 </div>
 <div id="RelationContainer" class=" RelationContainer"> <!-- Refreshed periodically --> </div>
 @section Scripts {
     <script>
+        var test = [];
         $(function () {
-            initTimeout(120);
-            let logins = new PartialRefresh("@Url.Action("Relations", "FriendShips")", "RelationContainer", 2, Update);
+            initTimeout(8820);
+            var elementCheck = $('input[name=filtre]:checked');
+            elementCheck.each(function () {
+                test.push(this.id);
+                console.log(test);
+            });
+            let friendshipList = new PartialRefresh("@Url.Action("Relations", "FriendShips")", "RelationContainer", 5, Update);
+            friendshipList.command("@Url.Action("Filtre")" + "?test=" + test);
             function Update() {
                 $(".PasEncoreAmi").click(
                     function () {
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        logins.command("@Url.Action("DemandeAmitié")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.command("@Url.Action("DemandeAmitié")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
                 $(".AccepterDemande").click(
@@ -37,7 +44,7 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        logins.command("@Url.Action("AccepterDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.command("@Url.Action("AccepterDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
                 $(".RefuserDemande").click(
@@ -45,7 +52,7 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        logins.command("@Url.Action("RefuserDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.command("@Url.Action("RefuserDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
                 $(".RetirerDemande").click(
@@ -53,21 +60,21 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        logins.command("@Url.Action("RetirerDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.command("@Url.Action("RetirerDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                    }
+                )
+                $(".checkedBox").change(
+                    function () {
+                        console.log("----------------------------------------------------------------------");
+                            test = [];
+                            var elementCheck = $('input[name=filtre]:checked');
+                            elementCheck.each(function () {
+                                test.push(this.id);
+                            });
+                        friendshipList.command("@Url.Action("Filtre")" + "?test=" + test);
                     }
                 )
             }
-            $("#Search").click(
-                function () {
-                    var test = [];
-                    var elementCheck = $('input[name=filtre]:checked');
-                    elementCheck.each(function () {
-                        test.push(this.id);
-                        console.log(test);
-                    });
-                    logins.command("@Url.Action("Filtre")" + "?test=" + test);
-                }
-            )
         })
     </script>
 }
