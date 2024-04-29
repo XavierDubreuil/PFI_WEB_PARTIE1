@@ -19,15 +19,16 @@ namespace MoviesDBManager.Controllers
 
         public ActionResult Relations(bool forceRefresh = false)
         {
-            bool filtersChanged = Session["FiltersChanged"] != null ? (bool)Session["FiltersChanged"] : false;
+         
             List <TypeRapport> ListDeFiltre = new List<TypeRapport>();
 
-            if (forceRefresh || DB.Relations.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged || filtersChanged)
+            if (forceRefresh || DB.Relations.HasChanged || OnlineUsers.HasChanged() || DB.Users.HasChanged )
             {
-                if (filtersChanged)
+                ListDeFiltre = DoFilter();
+                if (ListDeFiltre.Count()<7|| Session["FiltreNomEst"] != null)//7 == Aucun filtre appliqué
                 {
+                    Session["FiltersChanged"] = false;
                     bool block = false;
-                    ListDeFiltre = DoFilter();
                     foreach(var type in ListDeFiltre)
                     {
                         if(type == TypeRapport.block)
@@ -74,6 +75,8 @@ namespace MoviesDBManager.Controllers
                             }
                         }
                     }
+                    if(Session["FiltreNomEst"]!=null && (bool)Session["FiltreNomEst"] == true)
+                        return PartialView(FiltreNom(ListreFiltrer).OrderBy(c => DB.Users.Get(c.UsersId.usr2).FirstName));
                     return PartialView(ListreFiltrer.OrderBy(c => DB.Users.Get(c.UsersId.usr2).FirstName));
                 }
                 else
@@ -130,34 +133,66 @@ namespace MoviesDBManager.Controllers
         }
         public List<TypeRapport> DoFilter()
         {
-            var filtres = ((string)Session["CurrentFilter"]).Split(',');
             List<TypeRapport> listRap = new List<TypeRapport>();
-            foreach (var filtre in filtres)
+            if (Session["CurrentFilter"] == null)
             {
-                switch (filtre)
+                listRap.Add(TypeRapport.Pas_Encore_Ami);
+                listRap.Add(TypeRapport.Requête_Entrante);
+                listRap.Add(TypeRapport.Demande_Envoyée);
+                listRap.Add(TypeRapport.Amis);
+                listRap.Add(TypeRapport.Demande_Refusé);
+                listRap.Add(TypeRapport.A_Refusé_Demande);
+                listRap.Add(TypeRapport.block);
+            }
+            if (Session["CurrentFilter"] != null)
+            {
+                var filtres = ((string)Session["CurrentFilter"]).Split(',');
+                foreach (var filtre in filtres)
                 {
-                    case "Pas_Encore_Ami":
-                        listRap.Add(TypeRapport.Pas_Encore_Ami);
-                        break;
-                    case "Requête_Entrante":
-                        listRap.Add(TypeRapport.Requête_Entrante);
-                        break;
-                    case "Demande_Envoyée":
-                        listRap.Add(TypeRapport.Demande_Envoyée);
-                        break;
-                    case "Amis":
-                        listRap.Add(TypeRapport.Amis);
-                        break;
-                    case "DemandeRefuser":
-                        listRap.Add(TypeRapport.Demande_Refusé);
-                        listRap.Add(TypeRapport.A_Refusé_Demande);
-                        break;
-                    case "Bloquer":
-                        listRap.Add(TypeRapport.block);
-                        break;
+                    switch (filtre)
+                    {
+                        case "Pas_Encore_Ami":
+                            listRap.Add(TypeRapport.Pas_Encore_Ami);
+                            break;
+                        case "Requête_Entrante":
+                            listRap.Add(TypeRapport.Requête_Entrante);
+                            break;
+                        case "Demande_Envoyée":
+                            listRap.Add(TypeRapport.Demande_Envoyée);
+                            break;
+                        case "Amis":
+                            listRap.Add(TypeRapport.Amis);
+                            break;
+                        case "DemandeRefuser":
+                            listRap.Add(TypeRapport.Demande_Refusé);
+                            listRap.Add(TypeRapport.A_Refusé_Demande);
+                            break;
+                        case "Bloquer":
+                            listRap.Add(TypeRapport.block);
+                            break;
+                    }
                 }
             }
             return listRap;
+        }
+        public List<Relation> FiltreNom(List<Relation> listNonFiltrer)
+        {
+            List <Relation> Temporaire = new List<Relation>();
+            foreach(var elem in listNonFiltrer) 
+            {
+                var user = DB.Users.Get(elem.UsersId.usr2);
+                if (user.FirstName.Contains((string)Session["FiltreDuNom"]) || user.LastName.Contains((string)Session["FiltreDuNom"]))
+                    Temporaire.Add(elem);
+            }
+            return Temporaire;
+        }
+        public ActionResult SetFiltreNom(string nom)
+        {
+            if(nom != null) {
+                Session["FiltreNomEst"] = true;
+                Session["FiltreDuNom"] = nom;
+            }
+            return null;
         }
     }
 }

@@ -6,7 +6,7 @@
 <h2>Gestion des amitiés</h2>
 <hr />
 <div>
-    <input type="text" placeholder="Recherche..." maxlength="100" class="filtreNom" />
+    <input type="text" placeholder="Recherche..." maxlength="100" class="filtreNom" id="SearchBar" />
     @Helper.Icon("Search", "fa fa-search", "Rechercher parmis vos critères")
 </div>
 <div class="sectionFiltre">
@@ -71,7 +71,15 @@
                             elementCheck.each(function () {
                                 test.push(this.id);
                             });
-                        friendshipList.command("@Url.Action("Filtre")" + "?test=" + test);
+                        console.log();
+                        friendshipList.command("@Url.Action("Filtre")" + "?LesFiltres=" + test);
+                    }
+                )
+                $("#Search").click(
+                    function () {
+                        var nom = $('#SearchBar').val();
+                        console.log(nom);
+                        friendshipList.command("@Url.Action("SetFiltreNom")" + "?nom=" + nom);
                     }
                 )
             }
