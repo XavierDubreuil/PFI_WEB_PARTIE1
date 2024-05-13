@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using System.Web;
 using System.Web.Hosting;
 
@@ -19,6 +20,7 @@ namespace ChatManager.Models
         public static Repository<UserType> UserTypes { get; set; }
         public static Repository<UnverifiedEmail> UnverifiedEmails { get; set; }
         public static Repository<ResetPasswordCommand> ResetPasswordCommands { get; set; }
+        public static MessagesRepository Messages { get; set; }
        
         public DB()
         {
@@ -29,6 +31,7 @@ namespace ChatManager.Models
             UnverifiedEmails = new Repository<UnverifiedEmail>();
             ResetPasswordCommands = new Repository<ResetPasswordCommand>();
             Logins = new LoginRepository();
+            Messages = new MessagesRepository();
            
             InitRepositories(this);
         }

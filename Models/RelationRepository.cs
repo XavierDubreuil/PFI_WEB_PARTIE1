@@ -39,5 +39,17 @@ namespace ChatManager.Models
             }
                 return(relation1, relation2);
         }
+        public List<User> GetFriends (int usrId)
+        {
+            List<User> users = new List<User>();
+            foreach(var relation in DB.Relations.ToList())
+            {
+                if(relation.UsersId.usr1 == usrId)
+                {
+                    users.Add(DB.Users.Get(relation.UsersId.usr2));
+                }
+            }
+            return users;
+        }
     }
 }

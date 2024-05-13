@@ -17,7 +17,9 @@
     <div><input checked class="checkedBox" type="checkbox" name="filtre" id="DemandeRefuser" />@Helper.Icon("", "fa fa-times-circle red", "")</div>
     <div><input checked class="checkedBox" type="checkbox" name="filtre" id="Bloquer" />@Helper.Icon("", "fa fa-ban red", "")</div>
 </div>
-<div id="RelationContainer" class=" RelationContainer"> <!-- Refreshed periodically --> </div>
+<div class="relations">
+    <div id="RelationContainer" class=" RelationContainer"> <!-- Refreshed periodically --> </div>
+</div>
 @section Scripts {
     <script>
         var test = [];
@@ -54,7 +56,7 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        friendshipList.command("@Url.Action("DemandeAmitié")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.confirmedCommand("Envoyer une demande d'amitié ?","@Url.Action("DemandeAmitié")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
                 $(".AccepterDemande").click(
@@ -62,7 +64,7 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        friendshipList.command("@Url.Action("AccepterDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.confirmedCommand("Accepter la demande d'amitié","@Url.Action("AccepterDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
                 $(".RefuserDemande").click(
@@ -70,7 +72,7 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        friendshipList.command("@Url.Action("RefuserDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.confirmedCommand("Refuser la demande d'amitié","@Url.Action("RefuserDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
                 $(".RetirerDemande").click(
@@ -78,7 +80,7 @@
                         let user1 = this.id.split('_')[1];
                         let user2 = this.id.split('_')[2];
 
-                        friendshipList.command("@Url.Action("RetirerDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
+                        friendshipList.confirmedCommand("Retirer la demande d'amitié ?","@Url.Action("RetirerDemande")" + "?Idusr1=" + user1 + "&Idusr2=" + user2);
                     }
                 )
 

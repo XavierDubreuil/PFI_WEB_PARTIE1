@@ -138,6 +138,8 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\LoginCredential.cs" />
     <Compile Include="Models\LoginRepository.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessagesRepository.cs" />
     <Compile Include="Models\Notifications.cs" />
     <Compile Include="Models\OnLineUsers.cs" />
     <Compile Include="Models\PasswordView.cs" />
@@ -273,8 +275,11 @@
     <Content Include="Scripts\jquery-3.7.1.min.map" />
     <Content Include="Views\Accounts\Logins.cshtml" />
     <Content Include="Views\FriendShips\Relations.cshtml" />
+    <Content Include="Views\ChatRoom\Friends.cshtml" />
+    <Content Include="Views\ChatRoom\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\Messages\" />
     <Folder Include="Views\Notifications\" />
   </ItemGroup>
   <ItemGroup>

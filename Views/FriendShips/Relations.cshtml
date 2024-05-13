@@ -18,47 +18,47 @@
                 {
                     case ChatManager.Models.TypeRapport.Pas_Encore_Ami:
                         <div id="PasEncoreAmi_@(current.Id)_@user.Id" class="PasEncoreAmi iconsFriendShips">
-                            @Helper.Icon("", "fa fa-plus-circle green", "")
+                            @Helper.Icon("", "fa fa-plus-circle green", "Envoyer une demande d'amitié")
                         </div>
                         break;
                     case ChatManager.Models.TypeRapport.Requête_Entrante:
                         <div class="iconsFriendShips">
                             <div id="AccepterDemande_@(current.Id)_@user.Id" class="AccepterDemande">
-                                @Helper.Icon("", "fa fa-check green", "")
+                                @Helper.Icon("", "fa fa-check green", "Accepter la demande d'amitié")
                             </div>
                             <div id="RefuserDemande_@(current.Id)_@user.Id" class="RefuserDemande">
-                                @Helper.Icon("", "fa fa-times red", "")
+                                @Helper.Icon("", "fa fa-times red", "Refuser la demande d'amitié")
                             </div>
                         </div>
                         break;
                     case ChatManager.Models.TypeRapport.Demande_Envoyée:
                         <div class="iconsFriendShips">
-                            @Helper.Icon("", "fa fa-clock-o green", "")
+                            @Helper.Icon("", "fa fa-clock-o green", "Attente de réponse")
                             <div id="RetirerDemande_@(current.Id)_@user.Id" class="RetirerDemande">
-                                @Helper.Icon("", "fa fa-times red", "")
+                                @Helper.Icon("", "fa fa-times red", "Retirer la demande d'amitié")
                             </div>
                         </div>
                         break;
                     case ChatManager.Models.TypeRapport.Amis:
                         <div class="iconsFriendShips">
-                            @Helper.Icon("", "fa fa-check-circle green", "")
+                            @Helper.Icon("", "fa fa-check-circle green", "Amis")
                             <div id="RetirerDemande_@(current.Id)_@user.Id" class="RetirerDemande">
 
-                                @Helper.Icon("", "fa fa-times red", "")
+                                @Helper.Icon("", "fa fa-times red", "Retirer l'amitié")
                             </div>
                         </div>
                         break;
                     case ChatManager.Models.TypeRapport.A_Refusé_Demande:
                         <div class="iconsFriendShips">
-                            @Helper.Icon("", "fa fa-times-circle red", "")
+                            @Helper.Icon("", "fa fa-times-circle red", "Requête refusé")
                             <div id="PasEncoreAmi_@(current.Id)_@user.Id" class="PasEncoreAmi iconsFriendShips">
-                                @Helper.Icon("", "fa fa-plus-circle green", "")
+                                @Helper.Icon("", "fa fa-plus-circle green", "Envoyer une demande d'amitié")
                             </div>
                         </div>
                         break;
                     case ChatManager.Models.TypeRapport.Demande_Refusé:
                         <div class="iconsFriendShips">
-                            @Helper.Icon("", "fa fa-times-circle red", "")
+                            @Helper.Icon("", "fa fa-times-circle red", "Demande refusé")
                         </div>
                         break;
                 }

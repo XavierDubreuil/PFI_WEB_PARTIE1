@@ -1,7 +1,41 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.TitleUpSection = "ChatRoom";
 }
 
-<h2>Salle de clavardage</h2>
 
+<h2><img class="ImgTitle" src="/Content/UI-Icons/chatRoom.png" />Salle de clavardage</h2>
+<hr />
+<div class="UpSection">
+    <div class="friendsContainer" id="friendsContainer">
+
+    </div>
+    <div class="messagesSectionContainer">
+        <div class="messagesInBox">
+            <div class="titleContainer">
+                <span>Aucune Conversation Sélectionnée</span>
+            </div>
+            <div class="messagesContainer"></div>
+        </div>
+        <div class="sendContainer"></div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script>
+        $(function () {
+            let friendsList = new PartialRefresh("@Url.Action("Friends","ChatRoom")", "friendsContainer", 5, Update);
+            //let conv = new PartialRefresh("@Url.Action("Message","ChatRoom")", "messagesInBox", 5, Update);
+            function Update() {
+                $('.userImgContainer').click(
+                    function () {
+                        $('.UserAvatarChatRoom').css("border", "");
+                        $(this).find('.UserAvatarChatRoom').css("border", "solid green 2px");
+                        let id = this.id.split('_')[0];
+                        //conv.command("@Url.Action("Message", "ChatRoom")" + "?usrId=" + id);
+                     }
+                )
+            }
+        })
+</script>
+}
