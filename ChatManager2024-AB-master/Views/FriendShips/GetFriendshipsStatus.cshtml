@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ChatManager.Models.User>
+
+@{
+    var user = ChatManager.Models.OnlineUsers.GetSessionUser();
+
+    foreach (var item in Model)
+    {
+        if (item.Id != user.Id)
+        {
+            var emailReference = "mailto:" + item.Email;
+            <div class="friendContainer" style="font-size:14px;">
+                <a href="@emailReference" title="Compte créé le @item.CreationDate.ToShortDateString()">
+                    @Helper.AvatarUser(item, "UserSmallAvatar")
+                </a>
+
+                @Helper.OnLineStatusIcon(ChatManager.Models.OnlineUsers.IsOnLine(item.Id), item.Blocked)
+
+                @{
+                    switch (ChatManager.Models.DB.Friendships.RelationStatus(user.Id, item.Id))
+                    {
+                        case ChatManager.Models.EnumRelationStatus.NotFriend: /* not friend relation*/
+                            <span class="command icon fa green fa-plus-circle"
+                                  url="/Friendships/SendFriendshipRequest/@item.Id"
+                                  message="Envoyer une demande d'amitié à @item.GetFullName()"
+                                  title="Envoyer une demande d'amitié à @item.GetFullName()"></span>
+                            break;
+                        case ChatManager.Models.EnumRelationStatus.Friend: /* friend*/
+                            <span class="icon fa green fa-check-circle"
+                                  title="Vous ête ami avec @item.GetFullName()"></span>
+                            <span class="command icon fa red fa-times"
+                                  url="/Friendships/RemoveFriendship/@item.Id"
+                                  message="Retirer l'amitié avec @item.GetFullName()"
+                                  title="Retirer l'amitié avec @item.GetFullName()"></span>
+                            break;
+                        case ChatManager.Models.EnumRelationStatus.Have_Been_Declined: /* friendship declined*/
+                            <span class="icon fa red fa-times-circle"
+                                  title="Votre demande d'amitié avec @item.GetFullName() a été déclinée"></span>
+                                break;
+                            case ChatManager.Models.EnumRelationStatus.Request_Sender: /* friendship pending*/
+                            <span class="icon fa green fa-clock-o"
+                                  title="Requête d'amitié avec @item.GetFullName() en attente"></span>
+                            <span class="command icon fa red fa-times"
+                                  url="/Friendships/RemoveFriendshipRequest/@item.Id"
+                                  message="Retirer la demande d'amitié avec @item.GetFullName()"
+                                  title="Retirer la demande d'amitié avec @item.GetFullName()"></span>
+                            break;
+                        case ChatManager.Models.EnumRelationStatus.Have_Decline: /* friendship declined*/
+                            <span class="icon fa red fa-times-circle"
+                                  title="Vous avez décliné de la demande d'amitié avec @item.GetFullName()"></span>
+                            <span class="command icon fa green fa-plus-circle"
+                                  url="/Friendships/SendFriendshipRequest/@item.Id"
+                                  message="Envoyer une demande d'amitié à @item.GetFullName()"
+                                  title="Envoyer une demande d'amitié à @item.GetFullName()"></span>
+                            break;
+                        case ChatManager.Models.EnumRelationStatus.Request_Receiver: /* friendship request*/
+                            <span class="command icon fa green fa-check"
+                                  url="/Friendships/AcceptFriendshipRequest/@item.Id"
+                                  message="Accepter la demande d'amitié de @item.GetFullName()"
+                                  title="Accepter la demande d'amitié de @item.GetFullName()"></span>
+                            <span class="command icon fa red fa-times"
+                                  url="/Friendships/DeclineFriendshipRequest/@item.Id"
+                                  message="Décliner la demande d'amitié de @item.GetFullName()"
+                                  title="Décliner la demande d'amitié de @item.GetFullName()"></span>
+                            break;
+                        case ChatManager.Models.EnumRelationStatus.Blocked: /* blocked*/
+                            <span class="icon fa red fa-ban"
+                                  title="L'usager @item.GetFullName() a été blocqué par l'administrateur."></span>
+                            break;
+
+                        default: break;
+                    }
+                }
+            </div>
+        }
+    }
+}

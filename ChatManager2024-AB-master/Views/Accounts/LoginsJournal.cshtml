@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ChatManager.Models.Login>
+
+@{
+    ViewBag.Title = "Journal des connexions";
+}
+
+<div class="formLayout">
+    <h2>Journal des connexions</h2>
+    <div id="LoginsListContainer"><!-- Periodicaly refreshed --></div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            initTimeout(170);
+            let pr = new PartialRefresh("@Url.Action("GetLoginsList")", "LoginsListContainer", 5);
+        })
+    </script>
+}
+

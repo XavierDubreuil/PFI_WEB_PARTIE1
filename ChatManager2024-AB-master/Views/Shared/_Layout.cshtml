@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+@{
+    var currentUser = ChatManager.Models.OnlineUsers.GetSessionUser();
+    bool NotificationsDisabled = currentUser != null ? currentUser.NotificationsDisabled : false;
+}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Room</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="menu">
+            <div class="menuLeft">
+                @Helper.ImageCmd("Home", "About", "/info-icon.png", "menuIcon", "A propos...")
+                @if (currentUser != null)
+                {
+                    @Helper.ImageCmd("ChatRoom", "Index", "/Content/UI-Icons/chatRoom.png", "menuIcon", "Salle de clavardage...")
+                    @Helper.ImageCmd("Friendships", "Index", "/Content/UI-Icons/friendships.png", "menuIcon", "Gestion des amitiés...")
+
+                    if (currentUser.IsAdmin)
+                    {
+                        @Helper.IconCmd("Accounts", "UsersList", "fa fa-users", "Gestion des usagers...")
+                        @Helper.IconCmd("Accounts", "GroupEmail", "fa fa-envelope", "Envoi de courriel à un groupe d'usagers...")
+                        @Helper.IconCmd("Accounts", "LoginsJournal", "fa fa-calendar", "Journal des connexions...")
+                    }
+                }
+            </div>
+            @if (currentUser != null)
+            {
+                @Helper.Icon("NotificationsIcon", "fa fa-bell", "Notifications")
+
+                @Helper.avatarLink(currentUser.Avatar, "/Accounts/Profil")
+
+                @Helper.IconCmd("Accounts", "Logout", "fa fa-sign-out", "Se déconnecter...")
+            }
+            else
+            {
+                <span>&nbsp;</span>
+                <span>&nbsp;</span>
+                @Helper.IconCmd("Accounts", "Login", "fa fa-sign-in ", "Se connecter...")
+            }
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+        $(function () {
+            let NotificationsDisabled = @NotificationsDisabled.ToString().ToLower();
+            if (!NotificationsDisabled) {
+                setInterval(() => {
+                    $.ajax({
+                        url: "/Accounts/UserHasNotifications",
+                        dataType: "text",
+                        success: (hasNotifications) => {
+                            console.log("Has notification : ", JSON.parse(hasNotifications))
+                            if (JSON.parse(hasNotifications))
+                                $("#NotificationsIcon").addClass("blink");
+                            else
+                                $("#NotificationsIcon").removeClass("blink");
+                        }
+                    })
+                }, 5 * 1000)
+            }
+            $("#NotificationsIcon").click(function () {
+                if (!NotificationsDisabled) {
+                    $.ajax({
+                        url: "/Accounts/GetUserNotifications",
+                        dataType: "text",
+                        success: (notifications) => {
+                            notifications = JSON.parse(notifications);
+                            console.log("Messages: ", notifications);
+                            if (notifications.length > 0) {
+                                let messages = "";
+                                notifications.forEach(message => {
+                                    messages += message + "<br>";
+                                })
+                                bootbox.alert(messages);
+                            }
+                            else
+                                bootbox.alert("Aucune notification");
+                            $("#NotificationsIcon").removeClass("blink");
+                        }
+                    })
+                } else {
+                    bootbox.alert("Notifications désactivées");
+                }
+            })
+        })
+
+    </script>
+
+</body>
+</html>

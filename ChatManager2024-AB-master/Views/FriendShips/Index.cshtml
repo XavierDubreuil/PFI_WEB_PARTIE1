@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Friendships Management";
+}
+
+<div class="formLayout">
+    <div style="display:grid; grid-template-columns: 65px auto; align-items:center">
+        <img src="/Content/UI-Icons/friendships.png" style="width:56px" />
+        <h2>Gestion des amitiés </h2>
+    </div>
+    <hr />
+    <div style="display:grid; grid-template-columns:295px 35px; column-gap:10px; margin-bottom:10px">
+        <input type="search" id="Search" placeholder="recherche..." class="form-control" value="@ViewBag.SearchText" />
+        <span id="SearchCommand" class="icon fa fa-search" style="margin-top:5px"></span>
+    </div>
+
+    <div class="friendfilters">
+        <input type="checkbox" id="filter_NotFriend" class="filter" @((bool)ViewBag.FilterNotFriend ? "checked" : "") />
+        <label for="filter_NotFriend" class="fa green fa-plus-circle" title="Afficher/masquer les usagers qui sont pas encore ami avec vous"></label>
+
+        <input type="checkbox" id="filter_Request" class="filter" @((bool)ViewBag.FilterRequest ? "checked" : "") />
+        <label for="filter_Request" class="fa green fa-check" title="Afficher/masquer les requêtes d'amitié reçues"></label>
+
+        <input type="checkbox" id="filter_Pending" class="filter" @((bool)ViewBag.FilterPending ? "checked" : "") />
+        <label for="filter_Pending" class=" fa green fa-clock-o" title="Afficher/masquer les requêtes d'amitié envoyées en attente de réponse"></label>
+
+        <input type="checkbox" id="filter_Friend" class="filter" @((bool)ViewBag.FilterFriend ? "checked" : "") />
+        <label for="filter_Friend" class="fa green fa-check-circle" title="Afficher/masquer tous les amis"></label>
+
+        <input type="checkbox" id="filter_Refused" class="filter" @((bool)ViewBag.FilterRefused ? "checked" : "") />
+        <label for="filter_Refused" class="fa red fa-times-circle" title="Afficher/masquer toutes les demandes refusées ou déclinées"></label>
+
+        <input type="checkbox" id="filter_Blocked" class="filter" @((bool)ViewBag.FilterBlocked ? "checked" : "") />
+        <label for="filter_Blocked" class="fa red fa-ban" title="Afficher/masquer tous les usagers bloqués"></label>
+
+    </div>
+    <hr />
+    <div class="main">
+        <div id="friendshipsListContainer"> </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(function () {
+           
+        initTimeout(680);
+        let friendShipsStatus = new PartialRefresh("@Url.Action("GetFriendShipsStatus")", "friendshipsListContainer", 2, UpdatefriendShipsCallback);
+
+        $('#Search').keypress(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+                var searchtext = $("#Search").val();
+                friendShipsStatus.command("/Friendships/Search?text=" + searchtext);
+            }
+        });
+        $('#SearchCommand').click(function () {
+            var searchtext = $("#Search").val();
+            friendShipsStatus.command("/Friendships/Search?text=" + searchtext);
+        });
+
+        $('#filter_NotFriend').click(function () {
+            friendShipsStatus.command("/Friendships/SetFilterNotFriend?check=" + $(this).is(':checked'));
+        })
+        $('#filter_Request').click(function () {
+            friendShipsStatus.command("/Friendships/SetFilterRequest?check=" + $(this).is(':checked'));
+        })
+        $('#filter_Pending').click(function () {
+            friendShipsStatus.command("/Friendships/SetFilterPending?check=" + $(this).is(':checked'));
+        })
+        $('#filter_Friend').click(function () {
+            friendShipsStatus.command("/Friendships/SetFilterFriend?check=" + $(this).is(':checked'));
+        })
+        $('#filter_Refused').click(function () {
+            friendShipsStatus.command("/Friendships/SetFilterRefused?check=" + $(this).is(':checked'));
+        })
+        $('#filter_Blocked').click(function () {
+            friendShipsStatus.command("/Friendships/SetFilterBlocked?check=" + $(this).is(':checked'));
+        })
+
+        function UpdatefriendShipsCallback() {
+            $(".command").click(function() {
+                var url = $(this).attr("url");
+                var message = $(this).attr("message");
+                friendShipsStatus.confirmedCommand(message, url);
+            });
+
+            }
+        })
+    </script>
+}

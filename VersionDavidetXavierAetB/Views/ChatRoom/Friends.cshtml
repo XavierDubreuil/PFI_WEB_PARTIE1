@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ChatManager.Models.User>
+@foreach (var friend in Model)
+{
+
+    <div class="userImgContainer" id="Usr_@friend.Id">
+        @Helper.Image(friend.Avatar, "UserAvatarChatRoom")
+    </div>
+
+}
+

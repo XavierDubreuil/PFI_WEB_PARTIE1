@@ -1,0 +1,6 @@
+﻿@model (IEnumerable<ChatManager.Models.Message> messages, ChatManager.Models.User user)
+<div class="titleContainer">
+    <span>Conversation avec @Model.user.GetFullName()</span>
+</div>
+<div class="messagesContainer"></div>
+
