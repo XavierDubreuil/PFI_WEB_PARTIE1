@@ -273,6 +273,7 @@
     <Content Include="Views\FriendShips\GetFriendshipsStatus.cshtml" />
     <Content Include="Views\ChatRoom\Friends.cshtml" />
     <Content Include="Views\ChatRoom\Message.cshtml" />
+    <Content Include="Views\ChatRoom\Conv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Notifications\" />

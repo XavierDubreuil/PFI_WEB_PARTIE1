@@ -6,34 +6,42 @@
 
 <h2><img class="ImgTitle" src="/Content/UI-Icons/chatRoom.png" />Salle de clavardage</h2>
 <hr />
-<div class="UpSection">
-    <div class="friendsContainer" id="friendsContainer">
+<div class="chatRoomContainer">
+    <div class="UpSection" id="UpSection">
 
+        @*<div class="friendsContainer" id="friendsContainer">
+
+            </div>*@
+        @*<div class="messagesSectionContainer">
+                <div class="messagesInBox" id="messagesInBox">
+                    <div class="titleContainer">
+                        <span>Aucune Conversation Sélectionnée</span>
+                    </div>
+                    <div class="messagesContainer"></div>
+                </div>
+                <div class="sendContainer">
+                    <input class="sendInput" type="text" placeholder="Tapez votre message içi ..." />
+                    @Helper.Icon("sendIcon", "fa-paper-plane fa-3 sendIcon", "Envoyer le Message")
+                </div>
+            </div>*@
     </div>
-    <div class="messagesSectionContainer">
-        <div class="messagesInBox" id="messagesInBox">
-            <div class="titleContainer">
-                <span>Aucune Conversation Sélectionnée</span>
-            </div>
-            <div class="messagesContainer"></div>
-        </div>
-        <div class="sendContainer">
-            <input class="sendInput" type="text" placeholder="Tapez votre message içi ..." />
-            @Helper.Icon("sendIcon", "fa-paper-plane fa-3 sendIcon", "Envoyer le Message")
-        </div>
+    <div class="sendContainer">
+        <input class="sendInput" type="text" placeholder="Tapez votre message içi ..." />
+        @Helper.Icon("sendIcon", "fa-paper-plane fa-3 sendIcon", "Envoyer le Message")
     </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-    $(function () {
-            let friendsList = new PartialRefresh("@Url.Action("Friends","ChatRoom")", "friendsContainer", 2, Update);
-            let conv = new PartialRefresh("@Url.Action("Message","ChatRoom")", "messagesInBox", 2, Update);
+        $(function ()
+        {
 
-            $('.sendIcon').click(
+            
+            let friendsList = new PartialRefresh("@Url.Action("Conv","ChatRoom")", "UpSection", 5, Update);
+             $('.sendIcon').click(
                 function () {
                     if ($('.sendInput').val().trim() != null || $('.sendInput').val().trim() != "")
-                        conv.command("@Url.Action("SendMessage", "ChatRoom")" + "?message=" + $('.sendInput').val().trim());
+                        friendsList.command("@Url.Action("SendMessage", "ChatRoom")" + "?message=" + $('.sendInput').val().trim());
 
                     $('.sendInput').val('');
                 }
@@ -42,10 +50,8 @@
                 $('.userImgContainer').click(
                     function () {
                         console.log(this.id.split('_')[1]);
-                        $(this).css("border", "solid green 4px");
                         let id = this.id.split('_')[1];
-                        conv.command("@Url.Action("Message", "ChatRoom")" + "?usrId=" + id + "&forceRefresh=true");
-                                    scrollBottom();
+                        friendsList.command("@Url.Action("SetSelec", "ChatRoom")" + "?usrId=" + id);
                      }
                 )
             }

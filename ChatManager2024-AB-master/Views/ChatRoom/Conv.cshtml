@@ -1,0 +1,72 @@
+﻿@model (IEnumerable<ChatManager.Models.User> amis, ChatManager.Models.User user, IEnumerable<IEnumerable<ChatManager.Models.Message>> messages)
+<div class="friendsContainer" id="friendsContainer">
+    @foreach (var friend in Model.amis)
+    {
+        if (Model.user != null && friend.Id == Model.user.Id)
+        {
+            <div class="userImgContainer" id="Usr_@friend.Id" title="@friend.GetFullName()" style="border: solid green 4px">
+                @Helper.Image(friend.Avatar, "UserAvatarChatRoom")
+            </div>
+        }
+        else
+        {
+            <div class="userImgContainer" id="Usr_@friend.Id" title="@friend.GetFullName()">
+                @Helper.Image(friend.Avatar, "UserAvatarChatRoom")
+            </div>
+        }
+    }
+</div>
+<div class="messagesSectionContainer">
+    <div class="messagesInBox" id="messagesInBox">
+        @if (Model.user != null)
+        {
+            <div class="titleContainer">
+                <span>Conversation avec</span>
+                <div class="titleUserContainer">
+                    @Helper.Image(Model.user.Avatar, "UserAvatarChatRoom")
+                    <span>@Model.user.GetFullName()</span>
+                </div>
+            </div>
+            <div id="convContainer" class="convContainer">
+                @if (Model.messages.ElementAt(0).Count() != 0)
+                {
+                    foreach (var dateMessage in Model.messages)
+                    {
+                        <div class="messageDate">
+                            <span>@dateMessage.ElementAt(0).Date.ToString("dd MMMM yyy - HH:mm")</span>
+                        </div>
+                        foreach (var message in dateMessage)
+                        {
+                            if (message.usrSource == Model.user.Id)
+                            {
+                                <div class="receivedMessage" title="Reçu le @message.Date.ToString("dd MMMM yyy à HH:mm")"><span>@message.content</span></div>
+                            }
+                            else
+                            {
+                                <div class="sentMessage" title="Envoyé le @message.Date.ToString("dd MMMM yyy à HH:mm")"><span>@message.content</span></div>
+                            }
+                        }
+                    }
+                }
+
+                <div id="last"></div>
+            </div>
+            <div class="messagesContainer"></div>
+        }
+        else
+        {
+            <div class="titleContainer">
+                <span>Aucune Conversation Sélectionnée</span>
+            </div>
+            <div class="messagesContainer"></div>
+        }
+    </div>
+</div>
+<script>
+    //propriété scroll -> https://openclassrooms.com/forum/sujet/faire-scroller-un-chat-automatiquement-vers-le-bas
+        var messages = document.getElementById("last");
+        messages.scrollIntoView();
+
+</script>
+
+

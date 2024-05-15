@@ -2,7 +2,7 @@
 @foreach (var friend in Model)
 {
 
-    <div class="userImgContainer" id="Usr_@friend.Id">
+    <div class="userImgContainer" id="Usr_@friend.Id" title="@friend.GetFullName()">
         @Helper.Image(friend.Avatar, "UserAvatarChatRoom")
     </div>
 
