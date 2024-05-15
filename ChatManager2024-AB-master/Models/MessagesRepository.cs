@@ -14,7 +14,7 @@ namespace ChatManager.Models
             liste.OrderBy(m => m.Date);
             List<List<Message>> sortedList = new List<List<Message>>();
             List<Message> tempList = new List<Message>();
-            if(liste.Count() == 1) 
+            if (liste.Count() == 1)
             {
                 tempList.Add(liste.ElementAt(0));
                 sortedList.Add(tempList);
