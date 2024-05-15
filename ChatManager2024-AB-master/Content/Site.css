@@ -475,17 +475,16 @@ div1, img1 {
 }
 
 .sendContainer {
-    width: 320px;
+    width: 100%;
     height: 80px;
     border: solid lightgrey 1px;
     border-radius: 10px;
     margin-top: 10px;
-    padding: 3%;
+    padding: 5%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-left: auto;
 }
 .userImgContainer {
     width: 60px;
@@ -577,7 +576,4 @@ div1, img1 {
     height: 75%;
     margin-top:5px;
 
-}
-.chatRoomContainer{
-    width: 400px;
 }

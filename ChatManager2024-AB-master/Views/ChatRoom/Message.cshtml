@@ -1,40 +1,29 @@
 ﻿@model (IEnumerable<IEnumerable<ChatManager.Models.Message>> messages, ChatManager.Models.User user)
-@if (Model.user != null)
-{
-    <div class="titleContainer">
-        <span>Conversation avec</span>
-        <div class="titleUserContainer">
-            @Helper.Image(Model.user.Avatar, "UserAvatarChatRoom")
-            <span>@Model.user.GetFullName()</span>
-        </div>
+<div class="titleContainer">
+    <span>Conversation avec</span>
+    <div class="titleUserContainer">
+        @Helper.Image(Model.user.Avatar, "UserAvatarChatRoom")
+        <span>@Model.user.GetFullName()</span>
     </div>
-    <div id="convContainer" class="convContainer">
-        @foreach (var dateMessage in Model.messages)
+</div>
+<div id="convContainer" class="convContainer">
+@foreach (var dateMessage in Model.messages)
+{
+    <div class="messageDate">
+        <span>@dateMessage.ElementAt(0).Date.ToString("dd MMMM yyy - HH:mm")</span>
+    </div>
+    foreach (var message in dateMessage)
+    {
+        if (message.usrSource == Model.user.Id)
         {
-            <div class="messageDate">
-                <span>@dateMessage.ElementAt(0).Date.ToString("dd MMMM yyy - HH:mm")</span>
-            </div>
-            foreach (var message in dateMessage)
-            {
-                if (message.usrSource == Model.user.Id)
-                {
-                    <div class="receivedMessage"><span>@message.content</span></div>
-                }
-                else
-                {
-                    <div class="sentMessage"><span>@message.content</span></div>
-                }
-            }
+            <div class="receivedMessage"><span>@message.content</span></div>
         }
-    </div>
-    <div class="messagesContainer"></div>
+        else
+        {
+            <div class="sentMessage"><span>@message.content</span></div>
+        }
+    }
 }
-else
-{
-    <div class="titleContainer">
-        <span>Aucune Conversation Sélectionnée</span>
-    </div>
-    <div class="messagesContainer"></div>
-}
-
+</div>
+<div class="messagesContainer"></div>
 
