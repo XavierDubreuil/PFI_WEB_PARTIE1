@@ -14,33 +14,26 @@ namespace ChatManager.Models
             liste.OrderBy(m => m.Date);
             List<List<Message>> sortedList = new List<List<Message>>();
             List<Message> tempList = new List<Message>();
-            if(liste.Count() == 1) 
+            if (liste.Count() == 1)
             {
                 tempList.Add(liste.ElementAt(0));
                 sortedList.Add(tempList);
                 return sortedList;
             }
-            for (int i = 0; i < liste.Count(); i++)
+            for (int i = 0; i < liste.Count() - 1; i++)
             {
-                if(tempList.Count() == 0)
+                if ((liste.ElementAt(i + 1).Date - liste.ElementAt(i).Date).TotalMinutes < 30)
                 {
                     tempList.Add(liste.ElementAt(i));
                 }
                 else
                 {
-                    if((liste.ElementAt(i).Date - tempList.ElementAt(0).Date).TotalMinutes < 30)
-                    {
-                        tempList.Add(liste.ElementAt(i));
-                    }
-                    else
-                    {
-                        sortedList.Add(tempList);
-                        tempList = new List<Message>
-                        {
-                            liste.ElementAt(i)
-                        };
-                    }
+                    tempList.Add(liste.ElementAt(i));
+                    sortedList.Add(tempList);
+                    tempList = new List<Message>();
                 }
+                if (i == liste.Count() - 2)
+                    tempList.Add(liste.ElementAt(i + 1));
             }
             sortedList.Add(tempList);
             return sortedList;

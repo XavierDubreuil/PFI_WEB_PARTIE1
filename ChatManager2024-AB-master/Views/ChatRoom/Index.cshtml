@@ -32,18 +32,28 @@
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script>
+<script>
         $(function ()
         {
-
-            
             let friendsList = new PartialRefresh("@Url.Action("Conv","ChatRoom")", "UpSection", 5, Update);
-             $('.sendIcon').click(
+            $('.sendIcon').click(
                 function () {
                     if ($('.sendInput').val().trim() != null || $('.sendInput').val().trim() != "")
                         friendsList.command("@Url.Action("SendMessage", "ChatRoom")" + "?message=" + $('.sendInput').val().trim());
 
                     $('.sendInput').val('');
+                }
+            )
+            $('.sendInput').on('keydown',
+                function (event) {
+                    if (event.keyCode === 13) {
+                        if ($('.sendInput').val().trim() != null || $('.sendInput').val().trim() != "") { }
+                        friendsList.command("@Url.Action("SendMessage", "ChatRoom")" + "?message=" + $('.sendInput').val().trim());
+                        $('.sendInput').val('');
+                    }
+                    else if (event.keyCode === 27) {
+                        $('.sendInput').val('');
+                    }
                 }
             )
             function Update() {
@@ -57,5 +67,5 @@
             }
     })
 
-    </script>
+</script>
 }
