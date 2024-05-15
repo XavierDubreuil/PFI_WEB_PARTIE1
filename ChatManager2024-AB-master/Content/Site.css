@@ -448,7 +448,7 @@ div1, img1 {
     flex-direction: column;
     height: 600px;
     width: 80px;
-    border: solid grey 1px;
+    border: solid lightgrey 1px;
     border-radius: 10px;
     align-items: center;
 }
@@ -460,6 +460,7 @@ div1, img1 {
     margin-left: 10px;
 }
 
+
 .UpSection {
     display: flex;
     flex-direction: row;
@@ -468,18 +469,38 @@ div1, img1 {
 .messagesInBox {
     width: 100%;
     height: 600px;
-    border: solid grey 1px;
+    border: solid lightgrey 1px;
     border-radius: 10px;
+    padding: 10px;
 }
 
 .sendContainer {
     width: 100%;
     height: 80px;
-    border: solid grey 1px;
+    border: solid lightgrey 1px;
     border-radius: 10px;
     margin-top: 10px;
+    padding: 5%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
-
+.userImgContainer {
+    width: 60px;
+    height: 60px;
+    border-radius: 45px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+.userImgContainer > .UserAvatarChatRoom {
+        width: 48px;
+        height: 48px;
+        
+}
 .UserAvatarChatRoom {
     width: 60px;
     height: 60px;
@@ -487,5 +508,72 @@ div1, img1 {
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    margin-top: 10px;
+
+}
+.titleContainer{
+    width: 100%;
+    height: 23%;
+    border-radius: 10px;
+    background-color: cadetblue;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+}
+.titleContainer > span, .titleUserContainer > span{
+    font-size: 1.7em;
+    color: white;
+    margin-left: 10px;
+}
+.titleUserContainer{
+    display: flex;
+    flex-direction: row;
+    margin-left:10px;
+    align-items: center;
+}
+.messageDate{
+    text-align: center;
+    color: lightgrey;
+    margin-top:4px;
+    border-bottom: 1px solid lightgrey;
+}
+.sentMessage {
+    background-color: #ebb434;
+    width: fit-content;
+    max-width: 60%;
+    min-height: 45px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+    font-size: 1.2em;
+    border-radius: 5px;
+    margin-left: auto;
+}
+.receivedMessage {
+    background-color: cadetblue;
+    width: fit-content;
+    max-width: 60%;
+    min-height: 45px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    justify-content: center;
+    font-size: 1.2em;
+    color: white;
+    border-radius: 5px;
+}
+.sendInput{
+    width: 85%;
+    height:100%;
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    font-size:1.2em;
+}
+.convContainer{
+    overflow-y: scroll;
+    height: 75%;
+    margin-top:5px;
+
 }

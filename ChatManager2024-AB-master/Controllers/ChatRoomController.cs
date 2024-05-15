@@ -59,5 +59,15 @@ namespace ChatManager.Controllers
 
             return null;
         }
+        public void SendMessage(string message, bool forceRefresh = false)
+        {
+            if((int)Session["SelecID"] != 0 && Session["SelecID"] != null)
+            {
+                var objMessage = new Message(OnlineUsers.GetSessionUser().Id, (int)Session["SelecID"]);
+                objMessage.content = message;
+                DB.Messages.Add(objMessage);
+                Message(0,true);
+            }
+        }
     }
 }

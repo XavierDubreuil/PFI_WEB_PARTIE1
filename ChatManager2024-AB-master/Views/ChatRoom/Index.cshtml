@@ -17,28 +17,39 @@
             </div>
             <div class="messagesContainer"></div>
         </div>
-        <div class="sendContainer"></div>
+        <div class="sendContainer">
+            <input class="sendInput" type="text" placeholder="Tapez votre message içi ..." />
+            @Helper.Icon("sendIcon", "fa-paper-plane fa-3 sendIcon", "Envoyer le Message")
+        </div>
     </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $(function () {
+    $(function () {
+            let friendsList = new PartialRefresh("@Url.Action("Friends","ChatRoom")", "friendsContainer", 2, Update);
+            let conv = new PartialRefresh("@Url.Action("Message","ChatRoom")", "messagesInBox", 2, Update);
 
-            let friendsList = new PartialRefresh("@Url.Action("Friends","ChatRoom")", "friendsContainer", 15, Update);
-            let conv = new PartialRefresh("@Url.Action("Message","ChatRoom")", "messagesInBox", 15, Update);
+            $('.sendIcon').click(
+                function () {
+                    if ($('.sendInput').val().trim() != null || $('.sendInput').val().trim() != "")
+                        conv.command("@Url.Action("SendMessage", "ChatRoom")" + "?message=" + $('.sendInput').val().trim());
+
+                    $('.sendInput').val('');
+                }
+            )
             function Update() {
                 $('.userImgContainer').click(
                     function () {
                         console.log(this.id.split('_')[1]);
-                        $('.UserAvatarChatRoom').css("border", "");
-                        $(this).find('.UserAvatarChatRoom').css("border", "solid green 2px");
+                        $(this).css("border", "solid green 4px");
                         let id = this.id.split('_')[1];
-                        selecId = id;
                         conv.command("@Url.Action("Message", "ChatRoom")" + "?usrId=" + id + "&forceRefresh=true");
+                                    scrollBottom();
                      }
                 )
             }
-        })
+    })
+
     </script>
 }
