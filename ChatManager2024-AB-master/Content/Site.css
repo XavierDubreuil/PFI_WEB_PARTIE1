@@ -551,6 +551,10 @@ div1, img1 {
     border-radius: 5px;
     margin-left: auto;
 }
+.contentImage{
+    max-width: 100%;
+    height: auto;
+}
 .receivedMessage {
     background-color: cadetblue;
     width: fit-content;
@@ -564,6 +568,10 @@ div1, img1 {
     font-size: 1.2em;
     color: white;
     border-radius: 5px;
+}
+.sentMessage > span, receivedMessage > span{
+    word-wrap: break-word;
+    max-width: 100%;
 }
 .sendInput{
     width: 85%;
@@ -580,4 +588,31 @@ div1, img1 {
 }
 .chatRoomContainer{
     width: 400px;
+}
+.sentMessageModifier{
+    display: block;
+    padding: 0;
+
+}
+.modifier{
+    display:none;
+}
+.input_modifier {
+    width: 100%;
+    padding: 10px;
+    min-height: 45px;
+    background-color: #f2c5ac;
+    border-radius: 5px;
+    border: solid 2px lightgrey;
+}
+.messageContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#modifier{
+    display:none;
+}
+#supprimmer{
+    display:none;
 }

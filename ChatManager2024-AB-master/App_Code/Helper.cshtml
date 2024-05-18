@@ -171,7 +171,7 @@
 {
     var Url = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
     var iconUrl = Url.Content("~/Content/UI-icons/timeout.png");
-    <img src="@iconUrl" class="small_icon" title="Session expirée"/>
+    <img src="@iconUrl" class="small_icon" title="Session expirée" />
 }
 @helper Checked(bool checkStatus)
 {
@@ -198,4 +198,89 @@
     }
     var iconUrl = Url.Content(icon);
     <img src="@iconUrl" class="UserSmallAvatar" title="@tooltip" />
+}
+@helper ParseContent(string content)
+{
+string[] tokens = content.Split(' ');
+foreach (var token in tokens)
+{
+    var t = token.ToLower();
+
+    if (t.Contains("http://") || t.Contains("https://"))
+    {
+        t = t.Replace("http://", "https://");
+        if (t.Contains(".webp"))
+        {
+            var image = token.Replace(".webp", "");
+            var webp = image + ".webp";
+            var png = image + ".png";
+            var jpg = image + ".jpg";
+                <br />
+                <picture class="contentImage">
+                    <source type="image/webp" srcset="@webp">
+                    <source type="image/png" srcset="@png">
+                    <img src="@jpg" style="width: auto;">
+                </picture>
+                <br />
+            }
+            else
+            {
+                if (t.Contains(".jpg") || t.Contains(".jpeg") || t.Contains(".png") || t.Contains(".bmp"))
+                {
+                    <br />
+                    <a href="@token" target="_blank" title="Cliquer pour atteindre le lien">
+                        <img class="contentImage" src="@token" alt="" />
+                    </a>
+                    <br />
+                }
+                else
+                {
+                    if (token.Contains("https://www.youtube.com/watch?v="))
+                    {
+                        string youtubeId = token.Replace("https://www.youtube.com/watch?v=", "");
+                        if (youtubeId.IndexOf("&") > -1)
+                        {
+                            youtubeId = youtubeId.Substring(0, youtubeId.IndexOf("&"));
+                        }
+                        string youtubeThumbnail = "https://i3.ytimg.com/vi/" + youtubeId + "/maxresdefault.jpg";
+                        <br />
+                        <a href="@token" target="_blank" title="Cliquer pour atteindre le lien">
+                            <img class="contentImage" src="@youtubeThumbnail" alt="" />
+                        </a>
+                        <br />
+                    }
+                    else
+                    {
+                        string[] tt = token.Split('/');
+                        string sublink = token;
+                        if (tt.Length > 2)
+                        {
+                            sublink = tt[0] + @"//" + tt[2] + "...";
+                        }
+                        <a href="@token" target="_blank" class="ellipsis" title="@token">@sublink</a>
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (t.Contains("[hr]"))
+            {
+                <hr />
+            }
+            else
+            {
+                string subtoken = token;
+                if (token.Length > 28)
+                {
+                    subtoken = token.Substring(0, 28) + "...";
+                    <span class="token" title="@token">@subtoken</span>
+                }
+                else
+                {
+                    <span class="token">@subtoken</span>
+                }
+            }
+        }
+    }
 }

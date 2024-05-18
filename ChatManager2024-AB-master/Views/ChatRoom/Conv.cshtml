@@ -43,7 +43,16 @@
                             }
                             else
                             {
-                                <div class="sentMessage" title="Envoyé le @message.Date.ToString("dd MMMM yyy à HH:mm")"><span>@message.content</span></div>
+                                <div class="messageContainer" id="message_@message.Id">
+                                    <div class="sentMessage" title="Envoyé le @message.Date.ToString("dd MMMM yyy à HH:mm")">
+                                        <span>@Helper.ParseContent(@message.content)</span>
+                                        <div class="modifier">
+                                            <input class="input_modifier" type="text" value="@message.content" />
+                                        </div>
+                                    </div>
+                                    @Helper.Icon("modifier", "fa-check fa-3 updateMessage", "Envoyer le Message")
+                                    @Helper.Icon("supprimmer", "fa-times fa-3 deleteMessage", "Envoyer le Message")
+                                </div>
                             }
                         }
                     }
@@ -64,8 +73,26 @@
 </div>
 <script>
     //propriété scroll -> https://openclassrooms.com/forum/sujet/faire-scroller-un-chat-automatiquement-vers-le-bas
-        var messages = document.getElementById("last");
-        messages.scrollIntoView();
+    var messages = document.getElementById("last");
+        if(messages !== null) 
+            messages.scrollIntoView();
+    $('.sentMessage').click(
+        function () {
+            $('.modifier').hide();
+            $('.updateMessage').hide();
+            $('.deleteMessage').hide();
+            $('.sentMessage > span').show();
+            $('.sentMessage').removeClass("sentMessageModifier");
+            $('.input_modifier').val($(this).find('span').text())
+            $(this).find("span").hide();
+            $(this).find(".modifier").show();
+            $(this).addClass("sentMessageModifier");
+            $(this).parent().find('#modifier').show();
+            $(this).parent().find('#supprimmer').show();
+
+
+        }
+    )
 
 </script>
 

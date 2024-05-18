@@ -38,12 +38,13 @@
             let friendsList = new PartialRefresh("@Url.Action("Conv","ChatRoom")", "UpSection", 5, Update);
             $('.sendIcon').click(
                 function () {
-                    if ($('.sendInput').val().trim() != null || $('.sendInput').val().trim() != "")
+                    if ($('.sendInput').val().trim() != null && $('.sendInput').val().trim() != "")
                         friendsList.command("@Url.Action("SendMessage", "ChatRoom")" + "?message=" + $('.sendInput').val().trim());
 
                     $('.sendInput').val('');
                 }
             )
+            //https://api.jquery.com/keydown/
             $('.sendInput').on('keydown',
                 function (event) {
                     if (event.keyCode === 13) {
@@ -62,7 +63,36 @@
                         console.log(this.id.split('_')[1]);
                         let id = this.id.split('_')[1];
                         friendsList.command("@Url.Action("SetSelec", "ChatRoom")" + "?usrId=" + id);
-                     }
+                    }
+                );
+                $('.updateMessage').click(
+                    function () {
+                        let id = $(this).parent().attr('id').split('_')[1];
+                        let value = $(this).parent().find('.sentMessage').find('.modifier').find('.input_modifier').val().trim();
+                        friendsList.command("@Url.Action("UpdateMessage", "ChatRoom")" + "?messageId=" + id + "&message=" + value)
+                    }
+                );
+                $('.input_modifier').on('keydown',
+                    function (event) {
+                        if (event.keyCode === 13) {
+                            let id = $(this).parent().parent().parent().attr('id').split('_')[1];
+                            let value = $(this).val().trim();
+                            friendsList.command("@Url.Action("UpdateMessage", "ChatRoom")" + "?messageId=" + id + "&message=" + value)
+                        }
+                        else if (event.keyCode === 27) {
+                            $('.modifier').hide();
+                            $('.updateMessage').hide();
+                            $('.deleteMessage').hide();
+                            $('.sentMessage > span').show();
+                            $('.sentMessage').removeClass("sentMessageModifier");
+                        }
+                    }
+                );
+                $('.deleteMessage').click(
+                    function () {
+                        let id = $(this).parent().attr('id').split('_')[1];
+                        friendsList.confirmedCommand("Voulez vous vraiment supprimer le message ?","@Url.Action("DeleteMessage", "ChatRoom")" + "?messageId=" + id)
+                    }
                 )
             }
     })
