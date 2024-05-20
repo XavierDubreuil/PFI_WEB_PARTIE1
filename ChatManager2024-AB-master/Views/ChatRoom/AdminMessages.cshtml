@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ChatManager.Models.Message>
+@if (Model != null)
+{
+    foreach (var message in Model)
+    {
+        <div class="messageCell">
+            @Helper.Image(ChatManager.Models.DB.Users.Get(message.usrSource).Avatar, "UserAvatarChatRoom")
+            @Helper.Image(ChatManager.Models.DB.Users.Get(message.usrTarget).Avatar, "UserAvatarChatRoom")
+            @if (!ChatManager.Models.DB.Users.Get(message.usrSource).IsAdmin || ChatManager.Models.OnlineUsers.GetSessionUser().Id == message.usrSource)
+            {
+                @Helper.Icon("supprimmerAdmin_" + message.Id, "fa-times-circle fa-3 deleteMessage", "Supprimmer le Message")
+            }
+            else
+            {
+                <div class="icon"></div>
+            }
+            <div class="sentMessage" title="Envoyé le @message.Date.ToString("dd MMMM yyy à HH:mm")">
+                <span>@Helper.ParseContent(@message.content)</span>
+            </div>
+
+        </div>
+    }
+}
+

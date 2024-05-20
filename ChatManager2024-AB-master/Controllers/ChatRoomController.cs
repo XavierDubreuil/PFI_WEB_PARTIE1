@@ -93,5 +93,19 @@ namespace ChatManager.Controllers
                 DB.Messages.Delete(messageID);
             }
         }
+        [OnlineUsers.AdminAccess]
+        public ActionResult Admin()
+        {
+            return View();
+        }
+        public ActionResult AdminMessages(bool forceRefresh = false)
+        {
+            if (forceRefresh || OnlineUsers.HasChanged()  || DB.Messages.HasChanged)
+            {
+                var listeMessage = DB.Messages.ToList().OrderByDescending(m => m.Id).ToList();
+                return PartialView(listeMessage);
+            }
+            return null;
+        }
     }
 }

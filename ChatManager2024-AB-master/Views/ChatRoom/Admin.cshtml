@@ -1,0 +1,23 @@
+﻿<h2>Conversations</h2>
+<hr />
+<div class="convAdminContainer" id="convAdminContainer">
+
+</div>
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+        $(function () {
+            let adminList = new PartialRefresh("@Url.Action("AdminMessages","ChatRoom")", "convAdminContainer", 5, Update);
+            function Update()
+            {
+                $('.deleteMessage').click(
+                    function () {
+                        let id = $(this).attr('id').split('_')[1];
+                        friendsList.confirmedCommand("Voulez vous vraiment supprimer le message ?","@Url.Action("DeleteMessage", "ChatRoom")" + "?messageId=" + id)
+                    }
+                )
+            }
+
+        })
+</script>
+}

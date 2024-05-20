@@ -610,9 +610,42 @@ div1, img1 {
     flex-direction: row;
     align-items: center;
 }
-#modifier{
-    display:none;
+#modifier {
+    display: none;
 }
-#supprimmer{
-    display:none;
+
+#supprimmer {
+    display: none;
+}
+
+.convAdminContainer {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.messageCell {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.messageCell > .sentMessage {
+        margin-left: 0;
+        width: 55%;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-top: 0;
+ }
+
+.messageCell > .UserAvatarChatRoom {
+    height: 45px;
+    width: 45px;
+}
+
+.messageCell > .icon {
+        font-size: 35px !important
 }

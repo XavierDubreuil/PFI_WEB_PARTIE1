@@ -272,6 +272,8 @@
     <Content Include="Views\FriendShips\Index.cshtml" />
     <Content Include="Views\FriendShips\GetFriendshipsStatus.cshtml" />
     <Content Include="Views\ChatRoom\Conv.cshtml" />
+    <Content Include="Views\ChatRoom\Admin.cshtml" />
+    <Content Include="Views\ChatRoom\AdminMessages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Notifications\" />
