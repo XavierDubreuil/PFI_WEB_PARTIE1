@@ -30,8 +30,6 @@
             @Html.RadioButtonsGroupFor(model => model.GenderId, (SelectList)ViewBag.Genders)
             @Html.ValidationMessageFor(model => model.GenderId, "", new { @class = "text-danger" })
         </fieldset>
-
-
         <fieldset>
             <div class="legend">@Html.DisplayNameFor(model => model.Email)</div>
             @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Email) } })
@@ -40,7 +38,6 @@
             @Html.EditorFor(model => model.ConfirmEmail, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmEmail) } })
             @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new { @class = "text-danger" })
         </fieldset>
-
         <fieldset>
             <div style="display:grid; align-items:center; grid-template-columns:auto 80px;">
                 <div class="legend">

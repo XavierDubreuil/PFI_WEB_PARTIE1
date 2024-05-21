@@ -493,10 +493,36 @@ namespace ChatManager.Controllers
         [OnlineUsers.AdminAccess]
         public JsonResult Delete(int userid)
         {
+            List<Message> listMessage = new List<Message>();
+            foreach(var message in DB.Messages.ToList().Where(m => m.usrSource == userid || m.usrTarget == userid)) {
+            listMessage.Add(message);
+            }
+            List<Login> listLogin = new List<Login>();
+            foreach(var login in DB.Logins.ToList().Where(m => m.UserId == userid))
+            {
+                listLogin.Add(login);
+            }
+            var listFriendship = new List<Friendship>();
+            foreach(var friendship in DB.Friendships.ToList().Where(m => m.SourceUserId == userid || m.TargetUserId == userid))
+            {
+                listFriendship.Add(friendship);
+            }
             User userToDelete = DB.Users.Get(userid);
             if (userToDelete != null)
             {
                 SendDeletedAccountEMail(userToDelete);
+                foreach(var message in listMessage)
+                {
+                    DB.Messages.Delete(message.Id);
+                }
+                foreach(var login in listLogin)
+                {
+                    DB.Logins.Delete(login.Id);
+                }
+                foreach (var friendship in listFriendship)
+                {
+                    DB.Friendships.Delete(friendship.Id);
+                }
                 return Json(DB.Users.Delete(userid), JsonRequestBehavior.AllowGet);
             }
             else
@@ -514,8 +540,24 @@ namespace ChatManager.Controllers
         public ActionResult Edit(int id)
         {
             User userToEdit = DB.Users.Get(id);
-            ViewBag.UserTypes = new SelectList(DB.Genders.ToList(), "Id", "Name", userToEdit.UserTypeId);
+            ViewBag.UserTypes = new SelectList(DB.UserTypes.ToList(), "Id", "Name", userToEdit.UserTypeId);
             return View(userToEdit);
+        }
+        [HttpPost]
+        [OnlineUsers.AdminAccess]
+        public ActionResult Edit(User user)
+        {
+            User userAvant = DB.Users.Get(user.Id);
+            if (user.Blocked!=null&&user.FirstName!=null&&user.LastName!=null&&user.ConfirmEmail!=null&&user.Email!=null&&user.UserType!=null&&user.Email==user.ConfirmEmail)
+            {
+                user.Avatar = userAvant.Avatar;
+                user.GenderId = userAvant.GenderId;
+                user.Password = userAvant.Password;
+                user.ConfirmPassword = userAvant.ConfirmPassword;
+                DB.Users.Update(user);
+            }
+            ViewBag.UserTypes = new SelectList(DB.Genders.ToList(), "Id", "Name", user.UserTypeId);
+            return View(user);
         }
         [OnlineUsers.AdminAccess]
         public ActionResult GetUsersList(bool forceRefresh = false)
