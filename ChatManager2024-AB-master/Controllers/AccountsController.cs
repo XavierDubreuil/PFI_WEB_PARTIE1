@@ -511,6 +511,13 @@ namespace ChatManager.Controllers
             return View();
         }
         [OnlineUsers.AdminAccess]
+        public ActionResult Edit(int id)
+        {
+            User userToEdit = DB.Users.Get(id);
+            ViewBag.UserTypes = new SelectList(DB.Genders.ToList(), "Id", "Name", userToEdit.UserTypeId);
+            return View(userToEdit);
+        }
+        [OnlineUsers.AdminAccess]
         public ActionResult GetUsersList(bool forceRefresh = false)
         {
             if (forceRefresh || OnlineUsers.HasChanged() || DB.Users.HasChanged)

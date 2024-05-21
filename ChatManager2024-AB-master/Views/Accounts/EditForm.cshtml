@@ -1,0 +1,48 @@
+﻿@model ChatManager.Models.User
+
+@{
+    ViewBag.Title = "Profil";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="formLayout">
+
+    <fieldset>
+        <div class="legend">Identification</div>
+        @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.FirstName) } })
+        @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        <br />
+        @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.LastName) } })
+        @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+    </fieldset>
+    <fieldset>
+        <div class="legend">@Html.DisplayNameFor(model => model.Email)</div>
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Email) } })
+        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        <br />
+        @Html.EditorFor(model => model.ConfirmEmail, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(model => model.ConfirmEmail) } })
+        @Html.ValidationMessageFor(model => model.ConfirmEmail, "", new { @class = "text-danger" })
+    </fieldset>
+    <fieldset>
+        <div class="legend">Type d'usager</div>
+        @Html.RadioButtonsGroupFor(model => model.UserTypeId, (SelectList)ViewBag.UserTypes)
+        @Html.ValidationMessageFor(model => model.UserTypeId, "", new { @class = "text-danger" })
+    </fieldset>
+    <fieldset>
+        <div class="form-check">
+            @Html.CheckBoxFor(model => model.Verified, new { @class = "form-check-input" })
+            @Html.LabelFor(model => model.Verified, new { @class = "form-check-label" })
+        </div>
+        <div class="form-check">
+            @Html.CheckBoxFor(model => model.Blocked, new { @class = "form-check-input" })
+            @Html.LabelFor(model => model.Blocked, new { @class = "form-check-label" })
+        </div>
+    </fieldset>
+    <input type="submit" value="Enregistrer" class="btn btn-default" />
+    <hr />
+    <a href="@((string)Session["LastAction"])">Retour</a>
+</div>
+}
+

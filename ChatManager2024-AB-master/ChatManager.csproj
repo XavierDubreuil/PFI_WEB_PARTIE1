@@ -274,6 +274,8 @@
     <Content Include="Views\ChatRoom\Conv.cshtml" />
     <Content Include="Views\ChatRoom\Admin.cshtml" />
     <Content Include="Views\ChatRoom\AdminMessages.cshtml" />
+    <Content Include="Views\Accounts\Edit.cshtml" />
+    <Content Include="Views\Accounts\EditForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Notifications\" />
