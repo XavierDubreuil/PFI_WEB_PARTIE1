@@ -15,9 +15,14 @@ namespace ChatManager.Controllers
         [HttpPost]
         public JsonResult EmailAvailable(string email)
         {
+            string mail = (string)Session["CourrielModif"];
             User user = OnlineUsers.GetSessionUser();
             int excludedId = user != null ? user.Id : 0;
-            return Json(DB.Users.EmailAvailable(email, excludedId));
+            if (email != mail)
+            {
+                return Json(DB.Users.EmailAvailable(email, excludedId));
+            }
+            return Json(DB.Users.EmailAvailable("TEST", excludedId));
         }
 
         [HttpPost]
@@ -540,6 +545,7 @@ namespace ChatManager.Controllers
         public ActionResult Edit(int id)
         {
             User userToEdit = DB.Users.Get(id);
+            Session["CourrielModif"] = userToEdit.Email;
             ViewBag.UserTypes = new SelectList(DB.UserTypes.ToList(), "Id", "Name", userToEdit.UserTypeId);
             return View(userToEdit);
         }
@@ -550,7 +556,6 @@ namespace ChatManager.Controllers
             User userAvant = DB.Users.Get(user.Id);
             if (user.Blocked!=null&&user.FirstName!=null&&user.LastName!=null&&user.ConfirmEmail!=null&&user.Email!=null&&user.UserType!=null&&user.Email==user.ConfirmEmail)
             {
-                user.Avatar = userAvant.Avatar;
                 user.GenderId = userAvant.GenderId;
                 user.Password = userAvant.Password;
                 user.ConfirmPassword = userAvant.ConfirmPassword;
